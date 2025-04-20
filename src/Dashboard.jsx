@@ -22,6 +22,7 @@ import Sidebar from './Sidebar';
 import { InvoiceTable } from './Table';
 import { CreateUserForm } from './CreateUserForm';
 import FormBox from './FormBox';
+import ProfileSidebar from './ProfileSidebar';
 
 const Dashboard = () => {
 
@@ -140,6 +141,8 @@ const Dashboard = () => {
             />
 
           </Container>
+
+          <ProfileSidebar />
         </Box>
 
       </Box>
