@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Typography,
-  Paper,
   Chip,
   IconButton,
-  Grid,
   Avatar,
   Breadcrumbs,
   Link,
   Container,
+  Button,
+  ListItemButton,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -24,25 +24,66 @@ import { CreateUserForm } from './CreateUserForm';
 import FormBox from './FormBox';
 import ProfileSidebar from './ProfileSidebar';
 
+import dayjs from 'dayjs';
+import { Datepiker } from './Datepiker';
+
 const Dashboard = () => {
 
-  // Trend indicator component
-  const TrendIndicator = ({ value, days }) => {
-    const isPositive = !value.includes('-');
-    const color = isPositive ? '#2e7d32' : '#d32f2f';
+  
 
-    return (
-      <Box sx={{ display: 'flex', alignItems: 'center', fontSize: '0.75rem', color }}>
-        {isPositive ?
-          <ArrowUpwardIcon sx={{ fontSize: '0.875rem', color }} /> :
-          <ArrowDownwardIcon sx={{ fontSize: '0.875rem', color }} />
-        }
-        <Typography variant="caption" sx={{ color, fontWeight: 'medium', ml: 0.5 }}>
-          {value} last {days} days
-        </Typography>
-      </Box>
-    );
-  };
+async function checkPrimiis () {
+    await new Promise((resolve) => setTimeout( resolve, 3000))
+    console.log("mohan");
+    
+}
+
+
+  
+
+  const [dates, setDates] = useState({
+    FormDate: dayjs(new Date()),
+    ToDate: dayjs(new Date())
+  })
+
+  function handleDate(actionType) {
+    if (actionType === 'to Date') {
+      setDates({
+        ...dates,
+        FormDate: dayjs(new Date()),
+        ToDate: dayjs(new Date())
+      });
+    }
+    else if (actionType === 'this Week') {
+      const startOfWeek = dayjs().startOf('week'); // Sunday
+      const endOfWeek = dayjs().endOf('week');     // Saturday
+      setDates({
+        ...dates,
+        FormDate: startOfWeek,
+        ToDate: endOfWeek
+      });
+    }
+    else if (actionType === 'this Month') {
+      const startOfMonth = dayjs().startOf('month');
+      const endOfMonth = dayjs().endOf('month');
+      setDates({
+        ...dates,
+        FormDate: startOfMonth,
+        ToDate: endOfMonth
+      });
+    }
+  }
+
+  let btnStyle = {
+    bgcolor: '#5048e5',
+    color: '#ffff',
+    fontSize : 12,
+    height : 38,
+    mt : 1,
+    px : 2,
+    '&:hover': {
+      bgcolor: 'black'
+    }
+  }
 
   return (
     <Box sx={{ display: 'flex', height: '100vh', }}>
@@ -76,7 +117,11 @@ const Dashboard = () => {
               }}
             />
           </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <Box sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 2,
+          }}>
             <IconButton size="small">
               <SearchIcon fontSize="small" />
             </IconButton>
@@ -92,6 +137,20 @@ const Dashboard = () => {
 
         {/* Dashboard content */}
         <Box sx={{ p: 3, px: 8 }}>
+
+          <Box sx={{
+            mb: 4,
+            display: 'flex',
+            justifyContent: 'end',
+            alignItems: 'center',
+            gap: 2
+          }} >
+            <Button sx={btnStyle} onClick={() => handleDate('to Date')}>To Day</Button>
+            <Button sx={btnStyle} onClick={() => handleDate('this Week')}>This Week</Button>
+            <Button sx={btnStyle} onClick={() => handleDate('this Month')}>This Month</Button>
+            <Datepiker dates={dates} setDates={setDates} />
+          </Box>
+
 
 
           {/* Invoice and Applications sections */}

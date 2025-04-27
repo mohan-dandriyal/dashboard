@@ -3,3 +3,12 @@
 *{
   font-family: "Public Sans", sans-serif !important;
 }
+
+.css-1fb7els-MuiPickersSectionList-root-MuiPickersInputBase-sectionsContainer-MuiPickersOutlinedInput-sectionsContainer {
+  width: 132px !important;
+    padding: 10px 0 !important;
+}
+
+.css-vycme6-MuiPickersInputBase-root-MuiPickersOutlinedInput-root {
+  font-size: 14px !important;
+}
